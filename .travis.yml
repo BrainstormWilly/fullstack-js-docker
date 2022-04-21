@@ -13,6 +13,7 @@ after_success:
   - docker build -t brainstormwilly/fullstack-nginx ./nginx
   - docker build -t brainstormwilly/fullstack-server ./server
   - docker build -t brainstormwilly/fullstack-worker ./worker
+  # Docker login/push
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push brainstormwilly/fullstack-client
   - docker push brainstormwilly/fullstack-nginx
