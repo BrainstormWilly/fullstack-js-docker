@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t brainstormwilly/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run brainstormwilly/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t brainstormwilly/fullstack-client ./client
+  - docker build -t brainstormwilly/fullstack-nginx ./nginx
+  - docker build -t brainstormwilly/fullstack-server ./server
+  - docker build -t brainstormwilly/fullstack-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push brainstormwilly/fullstack-client
+  - docker push brainstormwilly/fullstack-nginx
+  - docker push brainstormwilly/fullstack-server
+  - docker push brainstormwilly/fullstack-worker
+
