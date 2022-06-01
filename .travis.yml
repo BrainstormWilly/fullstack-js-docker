@@ -20,3 +20,14 @@ after_success:
   - docker push brainstormwilly/fullstack-server
   - docker push brainstormwilly/fullstack-worker
 
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-west-1'
+  app: 'fullstack-docker-test'
+  env: 'Fullstackdockertest-env'
+  bucket_name: 'elasticbeanstalk-us-west-1-545785574301'
+  bucket_path: 'fullstack-docker'
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
